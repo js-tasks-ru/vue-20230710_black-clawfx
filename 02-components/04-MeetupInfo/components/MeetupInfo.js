@@ -9,12 +9,20 @@ export default defineComponent({
     date: Number,
   },
 
-  methods: {
-    toLocaleDate(value) {
-      let date = new Date(value);
-      return date.toLocaleDateString('ru-RU', {year: 'numeric', day: 'numeric', month: 'long'});
-    }
+  computed: {
+    isoDate() {
+      return new Date(this.date).toISOString().split('T')[0];
+    },
+
+    localDate() {
+      return new Date(this.date).toLocaleString(navigator.language, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    },
   },
+
 
   template: `
     <ul class="meetup-info">
@@ -28,7 +36,7 @@ export default defineComponent({
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time :datetime="toLocaleDate(date)">{{ toLocaleDate(date) }}</time>
+        <time :datetime="isoDate">{{ localDate }}</time>
       </li>
     </ul>`,
 });
