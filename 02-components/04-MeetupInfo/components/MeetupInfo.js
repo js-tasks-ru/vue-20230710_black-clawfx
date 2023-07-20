@@ -8,7 +8,6 @@ export default defineComponent({
     place: String,
     date: Number,
   },
-
   computed: {
     isoDate() {
       return new Date(this.date).toISOString().split('T')[0];
