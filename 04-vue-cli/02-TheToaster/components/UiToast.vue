@@ -54,12 +54,6 @@ methods: {
     },
 },
 
-mounted() {
-    setTimeout(() => {
-      this.removeToast();
-    }, this.delay);
-  },
-
 }
 </script>
 
