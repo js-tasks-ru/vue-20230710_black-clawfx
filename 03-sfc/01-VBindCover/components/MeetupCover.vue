@@ -1,5 +1,5 @@
 <template>
-  <div class="meetup-cover" :style="backgroundImage">
+  <div class="meetup-cover">
     <h1 class="meetup-cover__title">{{ title }}</h1>
   </div>
 </template>
