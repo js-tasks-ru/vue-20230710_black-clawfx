@@ -1,20 +1,30 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <UiIcon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="{'dropdown_opened': showDropdown}">
+    <button type="button" class="dropdown__toggle" @click="toggleDropdown" :class="{'dropdown__toggle_icon': hasIcon }">
+      <span v-if="selectedOption">
+        <UiIcon v-show="hasIcon && selectedOption.icon" :icon="selectedOption.icon" class="dropdown__icon" />
+        {{ selectedOption.text }}
+      </span>
+      <span v-else>{{ title }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <UiIcon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <UiIcon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div class="dropdown__menu" role="listbox" v-show="showDropdown">
+      <button 
+      class="dropdown__item" 
+      :class="{'dropdown__item_icon': hasIcon }"
+      role="option" 
+      type="button"
+      v-for="option in options"
+      :key="option.value"
+      @click="selectOption(option)"
+      >
+        <UiIcon v-show="hasIcon && option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
+    <select ref="select" :value="modelValue" @change="handleSelectChange" style="display: none">
+        <option v-for="option in options" :key="option.value" :value="option.value">{{ option.text }}</option>
+    </select>
   </div>
 </template>
 
@@ -25,6 +35,57 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+
+  props: {
+    options: {
+      type: Array,
+      required: true,
+    },
+    modelValue: {
+      type: String,
+      default: null,
+      required: true,
+    },
+    title: {
+       type: String,
+       required: true,
+    },
+  },
+
+  data() {
+    return {
+      showDropdown: false,
+    }
+  },
+
+  emits:['update:modelValue'],
+
+  methods: {
+     toggleDropdown() {
+        this.showDropdown = !this.showDropdown;
+     },
+     selectOption(option) {
+      this.showDropdown = false;
+      this.$emit('update:modelValue', option.value);
+    },
+    handleSelectChange(event) {
+      this.$emit('update:modelValue', event.target.value);
+    },
+  },
+
+  watch: {
+    modelValue(){},
+  },
+
+  computed: {
+     hasIcon() {
+      return this.options.some((option) => option.icon !== undefined );
+     },
+     selectedOption() {
+    return this.options.find((option) => option.value === this.modelValue) || null;
+  },
+  },
+
 };
 </script>
 

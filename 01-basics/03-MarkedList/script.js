@@ -41,7 +41,12 @@ const vm = createApp({
 
   computed: {
      activeEmails() {
-         return this.emails.map(email => ({name: email, itemClass: email.toLowerCase().includes(this.search.toLowerCase()) && this.search.length > 0 ? 'marked': ''}));
+      const search = this.search.toLowerCase();
+         return this.emails.map(email => (
+          {name: email, 
+          isMarked: search && email.toLowerCase().includes(search)
+          }
+          ));
      }
   },
 

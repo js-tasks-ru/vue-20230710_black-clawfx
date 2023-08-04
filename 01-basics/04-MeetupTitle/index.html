@@ -7,7 +7,7 @@
   <body>
     <div id="app">
       <div>
-        <label v-for="inputs in 5"><input type="radio" name="meetupId" v-model="inputId" :value="inputs"/>{{inputs}}</label>
+        <label v-for="inputs in 5"><input type="radio" name="meetupId" v-model="inputId" :value="inputs"/>{{ inputs }}</label>
         <hr />
 
         <h3 v-if="meetupData">{{meetupData.title}}</h3>
