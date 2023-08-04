@@ -5,17 +5,29 @@
     <p><button @click="selectedType = 'registration'">Set registration</button></p>
     <p><button @click="updateOptions">Remove last option</button></p>
     <p>
-      <UiDropdown v-model="selectedType" :options="agendaItemTypes" title="Событие" />
+      <UiDropdown 
+      v-model="selectedType" 
+      :options="agendaItemTypes" 
+      title="Событие" 
+      />
     </p>
 
     <h2>Without icons</h2>
     <p>selectedLang = {{ selectedLang }}</p>
     <p>
-      <UiDropdown v-model="selectedLang" :options="langOptions" title="Язык" />
+      <UiDropdown 
+      v-model="selectedLang" 
+      :options="langOptions" 
+      :title="selectedLang" 
+      />
     </p>
 
     <h2>Mixed icons</h2>
-    <UiDropdown v-model="selectedMixed" :options="mixedIconsOptions" title="Mixed icons" />
+    <UiDropdown 
+    v-model="selectedMixed" 
+    :options="mixedIconsOptions"
+    title="Mixed icons"
+    />
     <p></p>
   </div>
 </template>
