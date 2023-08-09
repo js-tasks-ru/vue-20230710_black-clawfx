@@ -57,7 +57,11 @@ export default {
   computed: {
 
     currentMonth() {
-      return this.selectedDate.locale('ru').format("MMMM YYYY Г.");
+      const currentMonthDate = this.selectedDate.toDate();
+      return currentMonthDate.toLocaleDateString(navigator.language, {
+  month: 'long',
+  year: 'numeric',
+});
     },
 
     days() {
