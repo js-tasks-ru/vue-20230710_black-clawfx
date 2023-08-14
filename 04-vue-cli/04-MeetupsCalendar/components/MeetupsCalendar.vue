@@ -68,7 +68,7 @@ export default {
       return [
         ...this.previousMonthDays,
         ...this.currentMonthDays,
-        ...this.nextMonthDays
+        ...this.nextMonthDays,
       ];
      },
 
@@ -161,7 +161,17 @@ export default {
           isCurrentMonth: false
         };
       });
-    }
+    },
+
+         // Вычисляемое свойство для получения митапов для конкретного дня
+         getMeetupsForDay() {
+      return (date) => {
+        const formattedDate = dayjs(date).format("YYYY-MM-DD");
+      return this.meetups.filter((meetup) => {
+        return dayjs(meetup.date).format("YYYY-MM-DD") === formattedDate;
+      });
+      };
+    },
 
   },
 
@@ -177,14 +187,6 @@ export default {
     getWeekday(date) {
       return dayjs(date).weekday();
     },
-
-    getMeetupsForDay(date) {
-      const formattedDate = dayjs(date).format("YYYY-MM-DD");
-      return this.meetups.filter((meetup) => {
-        return dayjs(meetup.date).format("YYYY-MM-DD") === formattedDate;
-      });
-    },
-
 
   },
 };
