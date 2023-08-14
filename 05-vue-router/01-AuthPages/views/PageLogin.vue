@@ -16,7 +16,9 @@
         <div class="form__buttons">
           <button type="submit" class="button button_primary button_block">Войти</button>
         </div>
-        <div class="form__append">Нет аккаунта? <a href="/register" class="link">Зарегистрируйтесь</a></div>
+        <div class="form__append">Нет аккаунта? 
+          <RouterLink class="link" :to="{name: 'register'}">Зарегистрируйтесь</RouterLink>
+        </div>
       </form>
     </UiContainer>
   </div>
@@ -25,6 +27,7 @@
 <script>
 import UiFormGroup from '../components/UiFormGroup.vue';
 import UiContainer from '../components/UiContainer.vue';
+import { RouterLink } from 'vue-router';
 
 export default {
   name: 'PageLogin',
@@ -36,6 +39,13 @@ export default {
 
   methods: {
     handleSubmit() {
+      // Получаем значение query параметра 'from'
+      const fromRoute = this.$route.query.from;
+      if(fromRoute) {
+        this.$router.push( { path: fromRoute } )
+      } else {
+        this.$router.push( {path: '/' } )
+      }
       // Требуется обработать сабмит формы
     },
   },
