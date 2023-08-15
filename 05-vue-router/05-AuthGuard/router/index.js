@@ -40,4 +40,23 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to, from) => {
+  // если пользователь авторизован
+  if (to.meta.requireGuest && isAuthenticated()) {
+    // со страниц с мета свойством requireGuest должно редиректить на главную страницу
+    return {
+      path: '/',
+    }
+  }
+  // если пользователь не авторизован
+  if (to.meta.requireAuth && !isAuthenticated()) {
+    // со страниц с мета свойством requireAuth должно редиректить на страницу авторизации /login
+    return {
+      path: '/login',
+      // сохраняем локацию с параметром from для возврата обратно
+      query: { from: to.fullPath },
+    }
+  }
+})
+
 export { router };
