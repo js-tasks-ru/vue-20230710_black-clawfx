@@ -13,7 +13,7 @@ export default {
   inheritAttrs: false,
 
   props: {
-    modelValue: [String, Object, Function]
+    modelValue: [Boolean, Array, Set]
   },
 
   emits: ['update:modelValue'],
