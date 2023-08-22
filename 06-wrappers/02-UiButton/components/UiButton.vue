@@ -9,7 +9,6 @@
     }"
   :is="tag"
   :type="tag === 'button' ? 'button' : undefined"
-  v-bind="$attrs"
   >
     <slot>BUTTON</slot>
   </component>
@@ -18,8 +17,6 @@
 <script>
 export default {
   name: 'UiButton',
-
-  inheritAttrs: false,
 
   props: {
     tag: {
