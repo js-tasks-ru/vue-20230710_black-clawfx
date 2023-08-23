@@ -1,16 +1,12 @@
 <template>
   <UiInput
-  v-bind="$attrs"
   :type="type"
   :model-value="formattedValue"
   :step="step"
   @input="$emit('update:modelValue', $event.target.valueAsNumber)"
   >
-  <template v-if="$slots['left-icon']" #left-icon>
-     <slot name="left-icon"/>
-  </template>
-  <template v-if="$slots['right-icon']" #right-icon>
-     <slot name="right-icon"/>
+  <template v-for="slotName of Object.keys($slots)" #[slotName]>
+  <slot :name="slotName" />
   </template>
   </UiInput>
 </template>
@@ -20,8 +16,6 @@ import UiInput from './UiInput.vue';
 
 export default {
   name: 'UiInputDate',
-
-  inheritAttrs: false,
 
   components: { UiInput },
 
