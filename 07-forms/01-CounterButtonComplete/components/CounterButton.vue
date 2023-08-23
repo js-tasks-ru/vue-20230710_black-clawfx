@@ -25,9 +25,7 @@ export default {
     count: {
       immediate: true,
       handler(newValue) {
-        if (this.localCount !== newValue) {
-          this.localCount = newValue;
-        }
+        this.localCount = newValue;
       },
     },
 
