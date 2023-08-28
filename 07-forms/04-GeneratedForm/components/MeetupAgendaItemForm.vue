@@ -43,10 +43,7 @@
     >
     <component
     :is="agendaItemField.component"
-    :name="agendaItemField.props.name"
-    :multiline="agendaItemField.label === 'Описание' ? agendaItemField.props.multiline : undefined" 
-    :options="agendaItemField.component === 'ui-dropdown' ? agendaItemField.props.options : undefined"
-    :title="agendaItemField.props.title"
+    v-bind="agendaItemField.props"
     v-model="localAgendaItem[agendaItemFieldName]"
     />
     </UiFormGroup>
