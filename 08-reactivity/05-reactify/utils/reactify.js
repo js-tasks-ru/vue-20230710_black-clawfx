@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 
 /**
  * @template T
@@ -6,6 +6,14 @@ import { computed } from 'vue';
  * @returns {function(...[*]): ComputedRef<T>} - Функция вычисления от ref-ов, возвращающая вычисляемое значение computed
  */
 export function reactify(func) {
-  // ...
-  // return () => computed(() => {});
+  return (...args) => {
+    const refs = args.map(arg => {
+      if (arg instanceof Object && arg.hasOwnProperty('value')) {
+        return arg;
+      }
+      return ref(arg);
+    });
+
+    return computed(() => func(...refs.map(r => r.value)));
+  };
 }

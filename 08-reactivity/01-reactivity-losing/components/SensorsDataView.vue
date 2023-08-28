@@ -43,7 +43,7 @@ export default {
     },
 
     setData(sensors) {
-      this.sensors = klona({...sensors});
+      this.sensors = klona(sensors);
     },
   },
 };
