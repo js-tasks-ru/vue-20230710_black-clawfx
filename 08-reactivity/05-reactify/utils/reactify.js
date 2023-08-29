@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, unref } from 'vue';
 
 /**
  * @template T
@@ -8,12 +8,9 @@ import { ref, computed } from 'vue';
 export function reactify(func) {
   return (...args) => {
     const refs = args.map(arg => {
-      if (arg instanceof Object && arg.hasOwnProperty('value')) {
-        return arg;
-      }
-      return ref(arg);
+      return arg;
     });
 
-    return computed(() => func(...refs.map(r => r.value)));
+    return computed(() => func(...refs.map(arg => unref(arg))));
   };
 }
