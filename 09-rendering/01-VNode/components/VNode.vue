@@ -1,16 +1,5 @@
-<template>
-    <template v-if="Array.isArray(vnode)">
-      <template v-for="(item, index) in vnode" :key="index">
-        <component :is="item" />
-      </template>
-    </template>
-    <template v-else>
-      <component :is="vnode" />
-    </template>
-</template>
-
 <script>
-import { isVNode } from 'vue';
+import { h, isVNode, Fragment } from 'vue';
 
 export default {
   name: 'VNode',
@@ -22,5 +11,13 @@ export default {
       validator: (value) => (Array.isArray(value) ? value.every((item) => isVNode(item)) : isVNode(value)),
     },
   },
+
+  render() {
+    if (Array.isArray(this.vnode)) {
+      return h(Fragment, this.vnode.map(item => h(item)));
+    } else {
+      return h(this.vnode);
+    }
+  }
 };
 </script>
