@@ -1,5 +1,5 @@
 <script>
-import { h, isVNode, Fragment } from 'vue';
+import { isVNode } from 'vue';
 
 export default {
   name: 'VNode',
@@ -13,11 +13,7 @@ export default {
   },
 
   render() {
-    if (Array.isArray(this.vnode)) {
-      return h(Fragment, this.vnode.map(item => h(item)));
-    } else {
-      return h(this.vnode);
-    }
+    return this.vnode;
   }
 };
 </script>
