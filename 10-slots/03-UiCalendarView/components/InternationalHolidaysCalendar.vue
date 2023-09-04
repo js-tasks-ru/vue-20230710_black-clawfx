@@ -1,6 +1,6 @@
 <template>
-  <UiCalendarView>
-    <div v-for="holiday in internationalHolidaysMap[0][7]" :key="holiday" class="holiday">
+  <UiCalendarView v-slot="{ day }">
+    <div v-for="holiday in internationalHolidaysMap(day.date)" :key="holiday" class="holiday">
       {{ holiday }}
     </div>
   </UiCalendarView>
