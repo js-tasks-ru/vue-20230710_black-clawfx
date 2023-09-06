@@ -1,7 +1,7 @@
 <template>
   <div class="pagination-container">
     <!-- Контент страницы -->
-     <slot :item="item" v-for="item in itemsOnCurrentPage" :per-page="perPage" :page="page"/>
+     <slot :item="item" v-for="item in itemsOnCurrentPage"/>
   </div>
 </template>
 
