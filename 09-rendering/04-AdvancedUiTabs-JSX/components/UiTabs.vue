@@ -1,7 +1,7 @@
 <script lang="jsx">
 // Предлагается решать задачу с использованием JSX, но вы можете использовать и чистые рендер-функции
 
-// import UiTab from './UiTab.vue';
+import UiTab from './UiTab.vue';
 
 export default {
   name: 'UiTabs',
@@ -18,16 +18,48 @@ export default {
     },
   },
 
+  computed: {
+    tabNodes() {
+      return this.$slots.default().filter((vnode) => {
+      return vnode.type === UiTab;
+    });
+    },
+
+    activeTab() {
+      return this.tabNodes.find((tab) => {
+      return tab.props.name === this.active;
+    });
+    },
+
+    tabLinks() {
+       return this.tabNodes.map((tab) => {
+      const tabName = tab.props.name;
+      const isActive = tab === this.activeTab;
+
+      return (
+        <a
+          class={{
+            'tabs__tab': true,
+            'tabs__tab_active': isActive,
+          }}
+          role="tab"
+          onClick={() => this.setActive(tabName)}
+        >
+          {tab.props.title}
+        </a>
+      );
+      })
+    }  
+  },
+
   render() {
     return (
       <div class="tabs">
         <div class="tabs__nav" role="tablist">
-          <a class="tabs__tab" role="tab">Tab</a>
-          <a class="tabs__tab tabs__tab_active" role="tab">Active Tab</a>
-          <a class="tabs__tab" role="tab">Tab</a>
+          { this.tabLinks }   
         </div>
         <div class="tabs__content">
-          ACTIVE TAB CONTENT
+          { this.activeTab }
         </div>
       </div>
     );
