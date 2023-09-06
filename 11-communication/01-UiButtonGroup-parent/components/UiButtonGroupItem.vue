@@ -33,7 +33,7 @@ export default {
   },
 
   mounted() {
-    if (!this.$parent || this.$parent.$options.name !== 'UiButtonGroupItem' || this.$parent.$options.name !== 'UiButtonGroup') {
+    if (!this.$parent || this.$parent.$options.name !== 'UiButtonGroup') {
       console.warn('UiButtonGroup должен быть использован внутри UiButtonGroupItem.');
     }
   },
