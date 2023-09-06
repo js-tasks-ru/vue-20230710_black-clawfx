@@ -25,20 +25,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.promise
-      .then((result) => {
-        this.isPending = false;
-        this.isFulfilled = true;
-        this.result = result;
-      })
-      .catch((error) => {
-        this.isPending = false;
-        this.isRejected = true;
-        this.error = error;
-      });
-  },
-
   watch: {
     promise: {
       handler(newPromise) {
