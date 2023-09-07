@@ -1,7 +1,7 @@
 <template>
   <UiCalendarView v-slot="{ day }">
     <UiCalendarEvent 
-    v-for="meetup in getMeetupsForDay(day.date)"
+    v-for="meetup in getMeetupsForDay[day.date]"
     tag="a"
     :key="meetup.id" 
     :href="`/meetups/${meetup.id}`"
@@ -34,12 +34,17 @@ export default {
   computed: {
    // Вычисляемое свойство для получения митапов для конкретного дня
   getMeetupsForDay() {
-      return (date) => {
-        const formattedDate = dayjs(date).format("YYYY-MM-DD");
-      return this.meetups.filter((meetup) => {
-        return dayjs(meetup.date).format("YYYY-MM-DD") === formattedDate;
-      });
-      };
+    const meetupsByDate = {};
+
+    for (const meetup of this.meetups) {
+        const formattedDate = dayjs(meetup.date).format("YYYY-MM-DD");
+        if (!meetupsByDate[formattedDate]) {
+          meetupsByDate[formattedDate] = [];
+        }
+        meetupsByDate[formattedDate].push(meetup);
+      }
+
+      return meetupsByDate;
     },
   }
   
