@@ -18,7 +18,7 @@
         <div class="calendar-view__cell-day">{{ day.day }}</div>
         <div class="calendar-view__cell-content">
           <a
-            v-for="meetup in getMeetupsForDay(day.date)"
+            v-for="meetup in getMeetupsForDay[day.date]"
             :key="meetup.id"
             :href="`/meetups/${meetup.id}`"
             class="calendar-event"
@@ -165,12 +165,17 @@ export default {
 
          // Вычисляемое свойство для получения митапов для конкретного дня
          getMeetupsForDay() {
-      return (date) => {
-        const formattedDate = dayjs(date).format("YYYY-MM-DD");
-      return this.meetups.filter((meetup) => {
-        return dayjs(meetup.date).format("YYYY-MM-DD") === formattedDate;
-      });
-      };
+    const meetupsByDate = {};
+
+    for (const meetup of this.meetups) {
+        const formattedDate = dayjs(meetup.date).format("YYYY-MM-DD");
+        if (!meetupsByDate[formattedDate]) {
+          meetupsByDate[formattedDate] = [];
+        }
+        meetupsByDate[formattedDate].push(meetup);
+      }
+
+      return meetupsByDate;
     },
 
   },
