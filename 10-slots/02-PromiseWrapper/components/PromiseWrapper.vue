@@ -1,7 +1,7 @@
 <template>
-  <slot name="pending" v-if="isPending"></slot>
-    <slot v-else-if="isFulfilled" name="fulfilled" :result="result"></slot>
-    <slot v-else-if="isRejected" name="rejected" :error="error"></slot>
+  <slot name="pending" v-if="status === 'pending'"></slot>
+    <slot v-else-if="status === 'fulfilled'" name="fulfilled" :result="result"></slot>
+    <slot v-else-if="status === 'rejected'" name="rejected" :error="error"></slot>
 </template>
 
 <script>
@@ -17,9 +17,7 @@ export default {
 
   data() {
     return {
-      isPending: true,
-      isFulfilled: false,
-      isRejected: false,
+      status: 'pending',
       result: null,
       error: null,
     };
@@ -28,21 +26,17 @@ export default {
   watch: {
     promise: {
       handler(newPromise) {
-        this.isPending = true;
-        this.isFulfilled = false;
-        this.isRejected = false;
+        this.status = 'pending';
         this.result = null;
         this.error = null;
 
         newPromise
           .then((result) => {
-            this.isPending = false;
-            this.isFulfilled = true;
+            this.status = 'fulfilled';
             this.result = result;
           })
           .catch((error) => {
-            this.isPending = false;
-            this.isRejected = true;
+            this.status = 'rejected';
             this.error = error;
           });
       },
